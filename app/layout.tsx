@@ -16,6 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+  <link rel="icon" href="/sletter.png" />
+  <title>{metadata.title as String}</title>
+  </head>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
