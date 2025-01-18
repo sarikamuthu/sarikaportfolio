@@ -2,9 +2,19 @@
 import React, { useState } from "react";
 import { FaLink } from "react-icons/fa";
 
+interface Publication {
+  id: number;
+  title: string;
+  volume: string;
+  anthologyId: string;
+  link: string;
+  description: string;
+}
+
 const Publications = () => {
   const [selectedPublication, setSelectedPublication] = useState(null);
 
+  
   const publications = [
     {
       id: 1,
