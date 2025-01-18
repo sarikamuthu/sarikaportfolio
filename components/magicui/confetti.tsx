@@ -117,7 +117,7 @@ function ConfettiButton({ options, children, ...props }: ConfettiButtonProps) {
     </Button>
   );
 }
-
+Confetti.displayName = "confetti"
 export { Confetti, ConfettiButton };
 
 export default Confetti;

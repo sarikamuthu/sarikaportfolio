@@ -1,10 +1,6 @@
 import Globe from "@/components/magicui/globe";
-import AnimatedBeamMultipleInputDemo from "./creativity/BeamDemo";
 import { AnimatedListDemo } from "./creativity/ListDemo";
 import { IconCloudDemo } from "./creativity/TechStackDemo";
-import { DockThingDemo } from "./creativity/DockDemo";
-import { ConfettiBasicCannon } from "./creativity/ConfettiDemo";
-import {ClientTweetCard} from "@/components/creativity/TweetCardDemo";
 
 export default function GlobeDemo() {
   return (
