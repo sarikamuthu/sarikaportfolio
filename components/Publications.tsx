@@ -12,7 +12,8 @@ interface Publication {
 }
 
 const Publications = () => {
-  const [selectedPublication, setSelectedPublication] = useState(null);
+  const [selectedPublication, setSelectedPublication] = useState<Publication | null>(null);
+
 
   
   const publications = [

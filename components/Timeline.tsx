@@ -3,8 +3,30 @@
 import React, { useState } from "react";
 import { FaGraduationCap, FaBriefcase, FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
 
+interface Card {
+  id: number;
+  institution?: string;
+  degree?: string;
+  role?: string;
+  company?: string;
+  duration: string;
+  location: string;
+  achievements?: string;
+  responsibilities?: string;
+  details: string;
+}
+interface ModalProps {
+  card: Card;
+  onClose: () => void;
+}
+interface TimelineCardProps {
+  data: Card;  
+  type?: "education" | "work"; 
+  index: number; 
+}
+
 const Timeline = () => {
-  const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedCard, setSelectedCard] = useState<Card | null>(null);
 
   const experiences = {
     education: [
@@ -82,7 +104,7 @@ const Timeline = () => {
     ]
   };
 
-  const Modal = ({ card, onClose }) => {
+  const Modal: React.FC<ModalProps> = ({ card, onClose }) => {
     // If details are already an array, use them; otherwise, split into bullet points
     const detailsArray = Array.isArray(card.details)
       ? card.details
@@ -112,9 +134,9 @@ const Timeline = () => {
             {card.location}
           </p>
           <ul className="list-disc list-inside text-gray-700">
-            {detailsArray.map((detail, index) => (
-              <li key={index}>{detail.trim()}</li>
-            ))}
+          {detailsArray.map((detail, index) => (
+  <li key={`${card.id}-detail-${index}`}>{detail.trim()}</li>
+))}
           </ul>
         </div>
       </div>
@@ -122,7 +144,8 @@ const Timeline = () => {
   };
   
 
-  const TimelineCard = ({ data, type, index }) => {
+  const TimelineCard: React.FC<TimelineCardProps> = ({ data, type, index }) => {
+
     const isEven = index % 2 === 0;
     const baseClasses = "relative p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer w-full md:w-5/12 bg-transparent";
     const alignmentClasses = isEven ? "md:ml-auto" : "";
@@ -172,17 +195,19 @@ const Timeline = () => {
         <div className="relative pt-10">
           <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-blue-200 hidden md:block" />
           <div className="space-y-12">
-            {[...experiences.education, ...experiences.work]
-              .sort((a, b) => new Date(b.duration.split(" - ")[0]) - new Date(a.duration.split(" - ")[0]))
-              .map((exp, index) => (
-                <TimelineCard
-                  key={exp.id}
-                  data={exp}
-                  type={experiences.education.includes(exp) ? "education" : "work"}
-                  index={index}
-                />
-              ))}
-          </div>
+  {[...experiences.education.map(exp => ({ ...exp, type: "education" })), 
+    ...experiences.work.map(exp => ({ ...exp, type: "work" }))] 
+    .sort((a, b) => new Date(b.duration.split(" - ")[0]).getTime() - new Date(a.duration.split(" - ")[0]).getTime())
+    .map((exp, index) => (
+      <TimelineCard
+        key={exp.id}
+        data={exp}
+        type={exp.type as "education" | "work"}
+        index={index}
+      />
+    ))}
+</div>
+
         </div>
       </div>
       {selectedCard && (
