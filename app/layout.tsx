@@ -17,9 +17,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-  <link rel="icon" href="/sletter.png" />
-  <title>{metadata.title as String}</title>
-  </head>
+        <title>{metadata.title as string}</title>
+      </head>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"

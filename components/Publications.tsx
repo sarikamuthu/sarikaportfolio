@@ -1,103 +1,114 @@
 "use client";
-import React, { useState } from "react";
-import { FaLink } from "react-icons/fa";
 
-interface Publication {
-  id: number;
-  title: string;
-  volume: string;
-  anthologyId: string;
-  link: string;
-  description: string;
-}
+import { useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { FaLink } from "react-icons/fa";
+import { publications } from "@/data/portfolio";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 
 const Publications = () => {
-  const [selectedPublication, setSelectedPublication] = useState<Publication | null>(null);
-
-
-  
-  const publications = [
-    {
-      id: 1,
-      title: "Hate Speech Detection using Transformer Model",
-      volume: "Proceedings of the 6th Workshop on Challenges and Applications of Automated Extraction of Socio-political Events from Text",
-      anthologyId: "2023.case-1.11",
-      link: "https://aclanthology.org/2023.case-1.11/",
-      description: "This task highlights the importance of detecting hate speech in text-embedded images.By leveraging deep learning models,this research aims to uncover the connection between hate speech and the entities it targets."
-    },
-    {
-      id: 2,
-      title: "Depression Detection System from Social Media Text using Transformer Models",
-      volume: " Proceedings of the Second Workshop on Language Technology for Equality, Diversity and Inclusion",
-      anthologyId: "2022.ltedi-1.26",
-      link: "https://aclanthology.org/2022.ltedi-1.26/",
-      description: "Depression is a common mental illness that involves sadness and lack of interest in all day-to-day activities. The task is to classify the social media text as signs of depression into three labels namely “not depressed”, “moderately depressed”, and “severely depressed”. We have build a system using Deep Learning Model “Transformers”. Transformers provides thousands of pretrained models to perform tasks on different modalities such as text, vision, and audio. The multi-class classification model used in our system is based on the ALBERT model."
-    },
-    {
-      id: 3,
-      title: "Troll Meme Classification in Tamil using Transformer Models",
-      volume: "Proceedings of the Second Workshop on Speech and Language Technologies for Dravidian Languages",
-      anthologyId: "2022.dravidianlangtech-1.21",
-      link: "https://aclanthology.org/2022.dravidianlangtech-1.21/",
-      description: "The ACL shared task of DravidianLangTech-2022 for Troll Meme classification is a binary classification task that involves identifying Tamil memes as troll or not-troll. Classification of memes is a challenging task since memes express humour and sarcasm in an implicit way. Team SSN_MLRG1 tested and compared results obtained by using three models namely BERT, ALBERT and XLNET. The XLNet model outperformed the other two models in terms of various performance metrics."
-    }
-  ];
+  const [selectedPublication, setSelectedPublication] = useState<number | null>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="heading">
-        My <span className="text-purple">Publications</span>
-      </h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-10">
-        {publications.map((pub) => (
-          <div
-            key={pub.id}
-            className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 p-6"
-            onClick={() => setSelectedPublication(pub)}
-          >
-            <h2 className="text-2xl font-semibold text-gray-800 mb-2">{pub.title}</h2>
-            <p className="text-sm text-gray-600 mb-2">{pub.volume}</p>
-            <p className="text-xs text-gray-500 mb-4">Anthology ID: {pub.anthologyId}</p>
-            
-            <button
-              className="flex lg:text-xl md:text-xs text-sm"
-              onClick={(e) => {
-                e.stopPropagation();
-                window.open(pub.link, "_blank");
-              }}
-              style={{ color: 'darkblue' }}
-            >
-              <FaLink />
-              <span>Publication Link</span>
-            </button>
-          </div>
-        ))}
+    <section id="publications" className="py-24">
+      <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <p className="text-sm uppercase tracking-[0.35em] text-purple-200">
+            Research
+          </p>
+          <h2 className="heading mt-3">
+            My <span className="text-purple">publications</span>
+          </h2>
+        </div>
+        <p className="max-w-2xl text-sm leading-7 text-white/70 sm:text-base">
+          My academic work sits at the intersection of NLP, AI, and socially relevant problem solving.
+        </p>
       </div>
 
-      {selectedPublication && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
-          onClick={() => setSelectedPublication(null)}
-        >
-          <div
-            className="bg-white rounded-xl p-6 max-w-2xl w-full"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2 className="text-3xl font-bold mb-4">{selectedPublication.title}</h2>
-            <p className="text-gray-600 mb-4">{selectedPublication.description}</p>
-            <div className="flex justify-end">
-              <button
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                onClick={() => setSelectedPublication(null)}
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+      <div className="space-y-5">
+        {publications.map((publication, index) => {
+          const isActive = selectedPublication === publication.id;
+
+          return (
+            <motion.article
+              key={publication.id}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+              whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.4, delay: index * 0.08 }}
+              className="rounded-[1.5rem] border border-white/10 bg-white/5 p-2 shadow-lg shadow-black/20"
+            >
+              <Card className="border-0 bg-transparent shadow-none">
+                <CardHeader className="gap-3">
+                  <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                    <div>
+                      <p className="text-sm uppercase tracking-[0.3em] text-purple-200">
+                        {publication.year}
+                      </p>
+                      <CardTitle className="mt-2 text-xl text-white">
+                        {publication.title}
+                      </CardTitle>
+                      <CardDescription className="mt-2 max-w-3xl text-sm leading-7 text-white/70">
+                        {publication.venue}
+                      </CardDescription>
+                    </div>
+
+                    <div className="flex flex-wrap gap-3">
+                      <a
+                        href={publication.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 rounded-full border border-purple-400/30 bg-purple-500/10 px-4 py-2 text-sm font-medium text-purple-200 transition hover:bg-purple-500/20"
+                      >
+                        <FaLink /> Open paper
+                      </a>
+                      <button
+                        type="button"
+                        onClick={() => setSelectedPublication(isActive ? null : publication.id)}
+                        aria-expanded={isActive}
+                        className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white/80 transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400"
+                      >
+                        {isActive ? "Hide abstract" : "View abstract"}
+                      </button>
+                    </div>
+                  </div>
+                </CardHeader>
+
+                <CardContent className="pt-0">
+                  <div className="flex flex-wrap gap-2">
+                    {publication.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs uppercase tracking-[0.25em] text-white/70"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <AnimatePresence initial={false}>
+                    {isActive ? (
+                      <motion.div
+                        initial={shouldReduceMotion ? false : { opacity: 0, height: 0 }}
+                        animate={shouldReduceMotion ? { opacity: 1, height: "auto" } : { opacity: 1, height: "auto" }}
+                        exit={shouldReduceMotion ? { opacity: 0, height: 0 } : { opacity: 0, height: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className="overflow-hidden"
+                      >
+                        <p className="mt-4 rounded-[1rem] border border-white/10 bg-black/20 p-4 text-sm leading-7 text-white/70">
+                          {publication.abstract}
+                        </p>
+                      </motion.div>
+                    ) : null}
+                  </AnimatePresence>
+                </CardContent>
+              </Card>
+            </motion.article>
+          );
+        })}
+      </div>
+    </section>
   );
 };
 

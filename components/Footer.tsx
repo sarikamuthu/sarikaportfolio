@@ -1,50 +1,70 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
 import { FaLocationArrow } from "react-icons/fa6";
-import { socialMedia } from "@/data";
+import { socialMedia } from "@/data/portfolio";
 import MagicButton from "./MagicButton";
 
 const Footer = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
-    <footer className="w-full pt-20 pb-10" id="contact">
-      {/* background grid */}
-      <div className="w-full absolute left-0 -bottom-72 min-h-96">
-        <img
-          src="/footer-grid.svg"
-          alt="grid"
-          className="w-full h-full opacity-50 "
-        />
+    <footer className="relative w-full pb-10 pt-20" id="contact">
+      <div className="absolute -bottom-72 left-0 min-h-96 w-full">
+        <img src="/footer-grid.svg" alt="grid" className="h-full w-full opacity-50" />
       </div>
 
-      <div className="flex flex-col items-center">
-        <h1 className="heading lg:max-w-[45vw]">
-          Ready to elevate <span className="text-purple">your</span> digital
-          footprint?
-        </h1>
-        <p className="text-white-200 md:mt-10 my-5 text-center">
-          Connect with me today to explore how we can drive innovation and achieve your objectives together.
-        </p>
-        <a href="mailto:sarikamuthu222@gmail.com">
-          <MagicButton
-            title="Get in Touch"
-            icon={<FaLocationArrow />}
-            position="right"
-          />
-        </a>
-      </div>
-      <div className="flex mt-16 md:flex-row flex-col justify-between items-center">
-        <p className="md:text-base text-sm md:font-normal font-light">
-          &copy; 2025 Sarika Esackimuthu. All rights reserved.
+      <motion.div
+        initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
+        whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.4 }}
+        className="relative z-10 flex flex-col items-center"
+      >
+        <h2 className="heading lg:max-w-[45vw]">
+          Ready to build something <span className="text-purple">meaningful</span> together?
+        </h2>
+        <p className="my-5 max-w-2xl text-center text-white/70 md:mt-10">
+          I’m always interested in thoughtful collaborations, product ideas, and opportunities to turn research into real experiences.
         </p>
 
-        <div className="flex items-center md:gap-3 gap-6">
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <a href="mailto:sarikamuthu222@gmail.com">
+            <MagicButton
+              title="Get in touch"
+              icon={<FaLocationArrow />}
+              position="right"
+            />
+          </a>
+        </div>
+      </motion.div>
+
+      <motion.div
+        initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
+        whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.45, delay: 0.08 }}
+        className="relative z-10 mt-16 flex flex-col items-center justify-between gap-6 md:flex-row"
+      >
+        <p className="text-sm font-light text-white/60 md:text-base">
+          © 2026 Sarika Esackimuthu. All rights reserved.
+        </p>
+
+        <div className="flex items-center gap-4 md:gap-3">
           {socialMedia.map((info) => (
-            <a key={info.id} href={info.link} target="_blank" rel="noopener noreferrer">
-              <div className="w-10 h-10 cursor-pointer flex justify-center items-center backdrop-filter backdrop-blur-lg saturate-180 bg-opacity-75 bg-black-200 rounded-lg border border-black-300">
-                <img src={info.img} alt="icon" width={20} height={20} />
-              </div>
+            <a
+              key={info.id}
+              href={info.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={info.label}
+              className="flex h-10 w-10 items-center justify-center rounded-lg border border-black-300 bg-black/20 backdrop-blur-lg saturate-180 transition hover:bg-white/10"
+            >
+              <img src={info.iconSrc} alt={info.label} width={20} height={20} />
             </a>
           ))}
         </div>
-      </div>
+      </motion.div>
     </footer>
   );
 };

@@ -1,55 +1,104 @@
+"use client";
+
+import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
 import { FaLocationArrow } from "react-icons/fa6";
 import MagicButton from "./ui/MagicButton";
 import { Spotlight } from "./ui/Spotlight";
-import { TextGenerateEffect } from "./ui/TextGenerateEffect";
+
+const heroWords = [
+  "Hi,",
+  "I'm",
+  "Sarika",
+  "-",
+  "navigating",
+  "the",
+  "universe",
+  "of",
+  "code,",
+  "AI,",
+  "products,",
+  "and",
+  "endless",
+  "curiosity.",
+];
 
 const Hero = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
-    <div className="pb-20 pt-20">
+    <section id="hero" className="relative overflow-hidden pb-24 pt-20 sm:pt-24 lg:pt-28">
       <div>
         <Spotlight
-          className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
+          className="-top-40 -left-10 h-screen md:-left-32 md:-top-20"
           fill="white"
         />
-        <Spotlight
-          className="h-[80vh] w-[50vw] top-10 left-full"
-          fill="purple"
-        />
+        <Spotlight className="left-full top-10 h-[80vh] w-[50vw]" fill="purple" />
         <Spotlight className="left-80 top-28 h-[80vh] w-[50vw]" fill="blue" />
       </div>
-      <div
-        className="h-screen w-full dark:bg-black-100 bg-white dark:bg-grid-white/[0.03] bg-grid-black-100/[0.2]
-       absolute top-0 left-0 flex items-center justify-center"
-      >
-       
-        <div
-          className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black-100
-         bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"
-        />
+
+      <div className="absolute left-0 top-0 flex h-screen w-full items-center justify-center bg-white bg-grid-black-100/[0.2] dark:bg-black-100 dark:bg-grid-white/[0.03]">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black-100" />
       </div>
 
-      <div className="flex justify-center relative my-20 z-10">
-        <div className="max-w-[89vw] md:max-w-2xl lg:max-w-[60vw] flex flex-col items-center justify-center">
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-10 px-2 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
+        <motion.div
+          initial={shouldReduceMotion ? false : { opacity: 0, x: -24 }}
+          animate={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
+          transition={{ duration: 0.55, ease: "easeOut" }}
+          className="mx-auto w-full max-w-md lg:mx-0"
+        >
+          <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/10 p-3 shadow-2xl shadow-purple-500/10 backdrop-blur-xl">
+            <Image
+              src="/mypic.png"
+              alt="Portrait of Sarika Esackimuthu"
+              width={720}
+              height={900}
+              priority
+              className="h-[420px] w-full rounded-[1.6rem] object-cover object-top sm:h-[520px]"
+            />
+          </div>
+        </motion.div>
 
-          <TextGenerateEffect
-            words="Turning passion into progress through tech"
-            className="text-center text-[40px] md:text-5xl lg:text-6xl"
-          />
-
-          <p className="text-center md:tracking-wider mb-4 text-sm md:text-lg lg:text-2xl">
-          Hi! I&apos;m Sarika, Software Engineer based in Chennai.
+        <motion.div
+          initial={shouldReduceMotion ? false : { opacity: 0, x: 24 }}
+          animate={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
+          transition={{ duration: 0.55, ease: "easeOut", delay: 0.12 }}
+          className="flex-1 text-left"
+        >
+          <p className="mb-5 inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm uppercase tracking-[0.35em] text-purple-200">
+            Software engineer • AI • product-minded
           </p>
 
-          <a href="#about">
-            <MagicButton
-              title="Show my work"
-              icon={<FaLocationArrow />}
-              position="right"
-            />
-          </a>
-        </div>
+          <h1 className="text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
+            {heroWords.map((word, index) => (
+              <motion.span
+                key={`${word}-${index}`}
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+                animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, delay: 0.06 * index }}
+                className="mr-2 inline-block"
+              >
+                {word}
+              </motion.span>
+            ))}
+          </h1>
+
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-white/70 sm:text-xl">
+I build software with curiosity, solve problems with purpose, and enjoy exploring where engineering, AI, products, and business come together.          </p>
+
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <a href="#projects">
+              <MagicButton
+                title="Explore my work"
+                icon={<FaLocationArrow />}
+                position="right"
+              />
+            </a>
+          </div>
+        </motion.div>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -35,7 +35,8 @@ const slugs = [
 
 export function IconCloudDemo() {
   return (
-    <div className="relative flex max-h-[373px] min-h-[300px] w-full max-w-[32rem] items-center justify-center overflow-hidden rounded-lg border bg-#000319 px-20 pb-20 pt-8 ">
+    <div className="relative flex min-h-[320px] w-full items-center justify-center overflow-hidden rounded-[1.5rem] border border-white/10 bg-gradient-to-br from-white/10 to-white/5 px-6 py-8 shadow-xl shadow-black/20 sm:min-h-[360px] lg:min-h-[420px]">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(168,85,247,0.18),transparent_45%),radial-gradient(circle_at_bottom_right,rgba(34,211,238,0.18),transparent_45%)]" />
       <IconCloud iconSlugs={slugs} />
     </div>
   );

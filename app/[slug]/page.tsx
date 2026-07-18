@@ -23,32 +23,36 @@ export default async function BlogArticle({
 }: {
   params: { slug: string };
 }) {
-  const data: fullBlog = await getData(params.slug);
+  const data = (await getData(params.slug)) as fullBlog | null;
+  const titleImageUrl = data?.titleImage ? urlFor(data.titleImage).url() : "/profile.jpg";
+  const content = data?.content ?? [];
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-center mb-8">
-        <span className="block text-base text-primary font-semibold tracking-wide uppercase">
+      <h1 className="mb-8 text-center">
+        <span className="block text-base font-semibold uppercase tracking-wide text-primary">
           Jan Marshal - Blog
         </span>
-        <span className="mt-2 block text-3xl leading-8 font-bold tracking-tight sm:text-4xl">
-          {/* {data.title} */}
+        <span className="mt-2 block text-3xl font-bold leading-8 tracking-tight sm:text-4xl">
+          {data?.title ?? "Blog post unavailable"}
         </span>
       </h1>
 
-      <div className="flex justify-center">
-        <Image
-          src={urlFor(data.titleImage).url()}
-          width={800}
-          height={800}
-          alt="Title Image"
-          priority
-          className="rounded-lg mt-8 border shadow-lg"
-        />
-      </div>
+      {titleImageUrl ? (
+        <div className="flex justify-center">
+          <Image
+            src={titleImageUrl}
+            width={800}
+            height={800}
+            alt={data?.title ? `${data.title} cover` : "Blog cover image"}
+            priority
+            className="mt-8 rounded-lg border shadow-lg"
+          />
+        </div>
+      ) : null}
 
-      <div className="mt-16 prose prose-blue prose-lg dark:prose-invert prose-li:marker:text-primary prose-a:text-primary">
-        <PortableText value={data.content} />
+      <div className="prose prose-blue prose-lg mt-16 dark:prose-invert prose-li:marker:text-primary prose-a:text-primary">
+        <PortableText value={content} />
       </div>
     </div>
   );
