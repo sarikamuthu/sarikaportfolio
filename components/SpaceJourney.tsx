@@ -237,9 +237,9 @@ function Starfield({ dense = false }: { dense?: boolean }) {
 
 /* ---------------- Rocket ---------------- */
 
-function Rocket({ leftPercent, topPercent }: { leftPercent: ReturnType<typeof useMotionValue>; topPercent: ReturnType<typeof useMotionValue> }) {
-  const left = useMotionTemplate`${leftPercent}%`;
-  const top = useMotionTemplate`${topPercent}%`;
+function Rocket({ leftPercent, topPercent }: { leftPercent: number | import("framer-motion").MotionValue<number>; topPercent: number | import("framer-motion").MotionValue<number> }) {
+  const left = typeof leftPercent === "number" ? `${leftPercent}%` : useMotionTemplate`${leftPercent}%`;
+  const top = typeof topPercent === "number" ? `${topPercent}%` : useMotionTemplate`${topPercent}%`;
 
   return (
     <motion.div

@@ -14,13 +14,13 @@ export default function AboutSection() {
 
   <div className="mt-5 space-y-6 text-lg leading-8 text-white/70">
     <p>
-      I'm a software engineer by profession, a curious explorer by nature,
+      I&apos;m a software engineer by profession, a curious explorer by nature,
       and a professional overthinker by talent.
     </p>
 
     <p>
       By day, I build backend systems and solve engineering problems. Beyond
-      work, I'm usually exploring AI, product management, business strategy,
+      work, I&apos;m usually exploring AI, product management, business strategy,
       startups, or whatever fascinating rabbit hole curiosity leads me to
       next.
     </p>
@@ -33,7 +33,7 @@ export default function AboutSection() {
 
     <p>
       My goal is simple: build products that make an impact, keep learning
-      every day, and eventually grow into a leader who inspires others. Currently, I'm focused on 
+      every day, and eventually grow into a leader who inspires others. Currently, I&apos;m focused on 
       growing into a technology leader who can bridge engineering excellence with business strategy and product vision.
     </p>
   </div>
